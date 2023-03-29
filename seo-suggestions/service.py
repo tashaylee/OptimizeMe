@@ -7,10 +7,10 @@ class GoogleTrendsService():
     def __init__(self):
         self.__queries = dict()
     
-    def __define_category(self, category:str):
+    def _define_category(self, category:str):
         return category.lower().title()
     
-    def __get_google_categories(self, pytrend:TrendReq) -> set:
+    def _get_google_categories(self, pytrend:TrendReq) -> set:
         primary_google_categories = dict()
         for child in pytrend.categories()['children']:
             if child['name'] not in primary_google_categories:
@@ -30,19 +30,18 @@ class GoogleTrendsService():
     def get_queries(self) -> dict:
         return self.__queries
     
-    def construct_pytrend(self, common_terms:list[str], category: str, engine:str='youtube') -> TrendReq:
+    def construct_pytrend(self, common_terms:list[str], category: str, engine:str='') -> TrendReq:
         # Get related queries associated with transcript words
         headers = {'headers': {'User-Agent': 'pytrends'}}
         pytrend = TrendReq(requests_args = headers)
 
         # specify category so we can narrow down searches
-        category = self.__define_category(category=category)
+        category = self._define_category(category=category)
 
-        if category in self.__get_google_categories(pytrend).keys():
-            cat = self.__get_google_categories(pytrend)[category]
+        if category in self._get_google_categories(pytrend).keys():
+            cat = self._get_google_categories(pytrend)[category]
         else:
-            logging.warn(f'couldnt detect {category} as a registered google category')
-            logging.info(f'Defaulting category to All Categories')
+            logging.warn(f'Couldnt detect "{category}" as a registered google category \n\nDefaulting category to All Categories')
             cat = 0
 
         # split common words into 5 different lists to build payload
@@ -77,6 +76,6 @@ class GoogleTrendsService():
         df =  pd.DataFrame(top_queries, columns=['transcript_keyword', 'trending_query'])
         return df
     
-    def export_to_csv(self, queries_df):
+    def export_to_csv(self, queries_df:pd.DataFrame):
         queries_df.to_csv("seo_term_suggestions.csv", index=False)
         return
