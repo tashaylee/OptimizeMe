@@ -1,6 +1,6 @@
-from transcript import Transcript
-from service import GoogleTrendsService
-from youtube import Youtube
+from optimizeme.transcript import Transcript
+from optimizeme.service import GoogleTrendsService
+from optimizeme.youtube import Youtube
 
 # TO DO:
 def main():

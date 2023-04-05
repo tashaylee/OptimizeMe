@@ -1,6 +1,6 @@
 import pytest
-from transcript import Transcript
-from service import GoogleTrendsService
+from optimizeme.transcript import Transcript
+from optimizeme.service import GoogleTrendsService
 from pathlib import Path
 
 FILE_NAME = Path(__file__).with_name('transcript.txt')

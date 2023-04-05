@@ -1,4 +1,4 @@
-from youtube import Youtube
+from optimizeme.youtube import Youtube
 import pytest
 
 @pytest.fixture

@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import numpy as np
 load_dotenv('.env')
-from utils import download_nltk
+from optimizeme.utils import download_nltk
 download_nltk()
 import logging
 from datetime import datetime
